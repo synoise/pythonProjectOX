@@ -20,7 +20,7 @@
                 <div class='chat'>
                     <div id="msg"></div>
                     <form id="chat-form">
-                        <in`put id="chat-input" type="text">
+                        <input id="chat-input" type="text">
                     </form>
                 </div>
         </div>
@@ -36,4 +36,33 @@
     <script src="{% static '/js/app_offline.js' %}"></script>
     <script src="{% static '/js/sock.js' %}"></script>
 <!--    <script src="./js/sock.js"></script>-->
+
+<script>
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/array/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#chat-log').value += (data.message + '\n');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+
+
+        // document.querySelector('#chat-message-submit').onclick = function(e) {
+        //     const messageInputDom = document.querySelector('#chat-message-input');
+        //     const message = messageInputDom.value;
+        //     chatSocket.send(JSON.stringify({
+        //         'message': message
+        //     }));
+        //     messageInputDom.value = '';
+        // };
+    </script>
 </body>

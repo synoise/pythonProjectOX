@@ -20,6 +20,7 @@ section {
 }
 
 #msg {
+  display: none;
   border: 1px solid darkolivegreen;
   width: 30vw;
   height: 40vh;
