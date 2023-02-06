@@ -19,16 +19,19 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 
 import json
 
+# import mysite.neurals.neurals as xxx
+
 from channels.generic.websocket import WebsocketConsumer
 
+# nn = mysite.neurals
+# print(nn.neurals.bb())
+def addMove(area: list, gamer: bool, award: int):
+    for i in range(len(area)):
+        if not (area[i]):
 
-def addMove(message: list):
-    for i in range(len(message)):
-        if message[i] == 0:
-            print(i,message[i],len(message))
-            message[i] = 1
+            area[i] = 1
             break
-    return [message , i]
+    return [area, i, gamer]
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -40,18 +43,22 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
+        award = text_data_json["award"]
+        gamer = text_data_json["gamer"]
         message = text_data_json["message"]
         winner = text_data_json["winner"]
-        # print("winner", winner)
+        print("winner", winner, "| gamer", gamer, "| award", award)
         # print("message", message)
-        self.send(text_data=json.dumps({"message": addMove(message)}))
+        if not(winner):
+            self.send(text_data=json.dumps({"message": addMove(message, gamer, award)}))
 
 
 # from mysite.chat import consumers
 
 websocket_urlpatterns = [
-    re_path(r"ws/chat/(?P<room_name>\w+)/$", ChatConsumer.as_asgi()),
+    re_path("ws/chat/array", ChatConsumer.as_asgi()),
 ]
+
 
 application = ProtocolTypeRouter(
     {
@@ -62,3 +69,4 @@ application = ProtocolTypeRouter(
         # Just HTTP for now. (We can add other protocols later.)
     }
 )
+
