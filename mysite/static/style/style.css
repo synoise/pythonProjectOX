@@ -57,6 +57,7 @@ section {
   color: white;
   position: relative;
   justify-content: space-evenly;
+  display: none;
 }
 
 .score h3 {
