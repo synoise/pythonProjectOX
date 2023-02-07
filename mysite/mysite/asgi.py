@@ -1,12 +1,3 @@
-"""
-ASGI config for mysite project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
-"""
-
 import os
 
 from django.urls import re_path
@@ -14,17 +5,17 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
+from django.urls import path
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 
 import json
-
-# import mysite.neurals.neurals as xxx
-
 from channels.generic.websocket import WebsocketConsumer
 
+# NIE MOŻNA ZROBIĆ IMPORTów z MYSITE
 # nn = mysite.neurals
 # print(nn.neurals.bb())
+
 def addMove(area: list, gamer: bool, award: int):
     for i in range(len(area)):
         if not (area[i]):
@@ -55,18 +46,18 @@ class ChatConsumer(WebsocketConsumer):
 
 # from mysite.chat import consumers
 
-websocket_urlpatterns = [
-    re_path("ws/chat/array", ChatConsumer.as_asgi()),
-]
-
-
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
+            AuthMiddlewareStack(URLRouter(
+                [
+                    re_path("ws/chat/array", ChatConsumer.as_asgi()),
+                ]
+            ))
         )
-        # Just HTTP for now. (We can add other protocols later.)
     }
 )
 
+
+# import mysite.templates

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "daphne",
     # 'channels',
     "chat",
+    "mysite",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,10 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-ASGI_APPLICATION = "mysite.asgi.application"
-# ASGI_APPLICATION = "mysite.asgi.application"
-# WSGI_APPLICATION = 'django_channels_example.wsgi.application'
-# ASGI_APPLICATION = 'django_channels_example.asgi.application'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +72,11 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = "mysite.asgi.application"
+# ASGI_APPLICATION = "mysite.asgi.application"
+# WSGI_APPLICATION = 'django_channels_example.wsgi.application'
+# ASGI_APPLICATION = 'django_channels_example.asgi.application'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
